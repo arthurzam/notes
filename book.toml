@@ -1,0 +1,10 @@
+[book]
+authors = ["Arthur Zamarin"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Notes"
+
+[output.html]
+default-theme = "navy"
+git-repository-url = "https://github.com/arthurzam/notes"
