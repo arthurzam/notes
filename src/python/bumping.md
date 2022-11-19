@@ -79,3 +79,19 @@ newsboat -i ~/.newsboat/arthurzam.opml
 stablereq-eshowkw 'dev-python/*'
 stablereq-find-pkg-bugs 'dev-python/*' && stablereq-make-list 'dev-python/*'
 ```
+
+## Cleanup done packages
+
+```bash
+a() {
+  pkgcheck scan -k RedundantVersion --reporter FormatReporter --format "{package}-{version}.ebuild" --stable-only | xargs rm -v && check-revdep
+}
+```
+
+And then I call:
+
+```bash
+rcd "package-name"
+a
+pkgdev commit .
+```
