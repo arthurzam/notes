@@ -77,7 +77,8 @@ newsboat -i ~/.newsboat/arthurzam.opml
 
 ```bash
 stablereq-eshowkw 'dev-python/*'
-stablereq-find-pkg-bugs 'dev-python/*' && stablereq-make-list 'dev-python/*'
+stablereq-find-pkg-bugs 'dev-python/*'
+pkgdev bugs $(pkgcheck scan -c StableRequestCheck -R FormatReporter --format '={category}/{package}-{version}' 'dev-python/*' | vipe | tee /tmp/pkgs.list)
 ```
 
 ## Cleanup done packages
