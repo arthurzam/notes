@@ -75,10 +75,20 @@ newsboat -i ~/.newsboat/arthurzam.opml
 
 ## Stable request workflow
 
+`vipe` comes from `sys-apps/moreutils[perl]`, and enables to edit the content
+of the pipe.
+
 ```bash
 stablereq-eshowkw 'dev-python/*'
 stablereq-find-pkg-bugs 'dev-python/*'
-pkgdev bugs $(pkgcheck scan -c StableRequestCheck -R FormatReporter --format '={category}/{package}-{version}' 'dev-python/*' | vipe | tee /tmp/pkgs.list)
+pkgcheck scan -c StableRequestCheck -R FormatReporter --format '={category}/{package}-{version}  # {desc}' 'dev-python/*' | vipe | tee /tmp/pkgs.list | pkgdev bugs
+```
+
+Another useful variant is to scan based on maintainer:
+
+```bash
+export maint=project@gentoo.org
+git grep -l "${maint}" */*/metadata.xml | cut -d/ -f1-2 | pkgcheck scan -k StableRequest -R FormatReporter --format "={category}/{package}-{version}  # {desc}" - | vipe | pkgdev bugs --auto-cc-arches "${maint}"
 ```
 
 ## Cleanup done packages
